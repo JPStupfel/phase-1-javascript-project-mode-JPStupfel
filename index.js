@@ -24,6 +24,7 @@ function makeCard(name,value){
     const pValue = document.createElement('p')
 
     div.id = `${name}`
+    div.className = 'card'
     pName.className = 'name'
     pValue.classValue = 'value'
 
