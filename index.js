@@ -5,11 +5,11 @@ const test = document.createElement('div')
 fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
     { 
         console.log(i.name)
-        makeCard(i.name,i.value); console.log(data)
+        makeCard.call(i);
     }
 })
 
-//create a card builer
+//create a card builder
 //input will be (name,value)
 /*out = 
 <div id=`${name}`>
@@ -17,19 +17,19 @@ fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).t
     <p classname='value'></p>
 </div>
 */
-
-function makeCard(name,value){
+//lets change this so instead of taking args it does a .this
+function makeCard(){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
 
-    div.id = `${name}`
+    div.id = `${this.name}`
     div.className = 'card'
     pName.className = 'name'
     pValue.classValue = 'value'
 
-    pName.textContent = name
-    pValue.textContent = value
+    pName.textContent = this.name
+    pValue.textContent = this.value
 
     div.appendChild(pName)
     div.appendChild(pValue)
