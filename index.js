@@ -4,7 +4,7 @@ const test = document.createElement('div')
 
 fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
     { 
-        console.log(i.name)
+        
         makeCard.call(i);
     }
 })
@@ -35,5 +35,19 @@ function makeCard(){
     div.appendChild(pValue)
 
     document.querySelector('body').appendChild(div)
+
+    //make the drop down p
+    const divDropDown = document.createElement('div')
+    const ptype = document.createElement('p')
+    const pSymbol = document.createElement('p')
+
+    ptype.textContent = `Type: ${this.unit}`
+    pSymbol.textContent = `Unit: ${this.unit}`
+    divDropDown.appendChild(ptype)
+    divDropDown.appendChild(pSymbol)
+
+    //add event listener to div 'click' to append/remove  p
+
+    //div.append(divDropDown)
 
 }
