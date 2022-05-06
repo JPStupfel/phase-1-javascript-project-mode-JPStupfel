@@ -2,7 +2,12 @@
 const test = document.createElement('div')
 
 
-fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {makeCard(data['rates']['aed']['name'],data['rates']['aed']['value']); console.log(data)})
+fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
+    { 
+        console.log(i.name)
+        makeCard(i.name,i.value); console.log(data)
+    }
+})
 
 //create a card builer
 //input will be (name,value)
