@@ -42,6 +42,8 @@ function makeCard(){
     const pSymbol = document.createElement('p')
 
     divDropDown.className = 'drop-down'
+    divDropDown.id = `${this.name}-drop-down`
+
     ptype.textContent = `Type: ${this.type}`
     pSymbol.textContent = `Unit: ${this.unit}`
     divDropDown.appendChild(ptype)
@@ -50,13 +52,24 @@ function makeCard(){
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>
     { 
-       if ( event.target.children.length <=2 ){
-        event.target.appendChild(divDropDown);
-        console.log(event.target)
+       if ( 
+           Boolean(document.querySelector(`#${this.name}-drop-down`))
+           ){
+            document.querySelector(`#${this.name}-drop-down`).remove()
        }
-       else event.target.querySelector('.drop-down').remove()
+       else  
+       event.target.appendChild(divDropDown);
+       console.log(Boolean(document.querySelector(`#${this.name}-drop-down`)))
     }
     )
-    //div.append(divDropDown)
-
+    
 }
+// div.addEventListener('click', (event)=>
+// { 
+//    if ( event.target.children.length <=2 ){
+//     event.target.appendChild(divDropDown);
+//     console.log(event.target)
+//    }
+//    else event.target.querySelector('.drop-down').remove()
+// }
+// )
