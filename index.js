@@ -1,12 +1,22 @@
 
 const test = document.createElement('div')
+//not working right now because at your event listener your drop down has a key = to the unit of each element...which sometimes contain special characters...solutions? stringify? or copy data in the fetch command and mine the keys of each.
+
+// fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
+//     { 
+//         makeCard.call(i);
+//     }
+// })
 
 
-fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
-    { 
-        
-        makeCard.call(i);
+
+fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { 
+    for (let i of Object.keys(data['rates'])){ 
+        makeCard.call(data.rates[i],i);
+        //console.log(i)
     }
+    // let keys = Object.keys(data['rates'])
+    // console.log(data.rates[keys[0]])
 })
 
 //create a card builder
@@ -18,7 +28,7 @@ fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).t
 </div>
 */
 //lets change this so instead of taking args it does a .this
-function makeCard(){
+function makeCard(id){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
@@ -42,7 +52,9 @@ function makeCard(){
     const pSymbol = document.createElement('p')
 
     divDropDown.className = 'drop-down'
-    divDropDown.id = `${this.unit}-drop-down`
+    
+    divDropDown.id = `${id}-drop-down`
+    
 
     ptype.textContent = `Type: ${this.type}`
     pSymbol.textContent = `Unit: ${this.unit}`
@@ -52,18 +64,18 @@ function makeCard(){
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>
     { 
-       
-        // console.log(document.querySelector(`#${this.name}-drop-down`))
+       console.log(this)
+        console.log(document.querySelector(`#${this.name}-drop-down`))
        if ( 
-           Boolean(document.querySelector(`#${this.unit}-drop-down`))
+           Boolean(document.querySelector(`#${id}-drop-down`))
            ){
-            document.querySelector(`#${this.unit}-drop-down`).remove()
+            document.querySelector(`#${id}-drop-down`).remove()
        
         console.log(event.target)
        }
        else  
        event.target.appendChild(divDropDown);
-       console.log(Boolean(document.querySelector(`#${this.unit}-drop-down`)))
+       
     }
     
     )
