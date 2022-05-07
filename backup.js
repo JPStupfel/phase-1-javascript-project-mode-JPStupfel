@@ -35,7 +35,7 @@ function makeCard(id){
     div.id = `${this.name}`
     div.className = 'card'
     pName.className = 'name'
-    pValue.classValue = 'value'
+    pValue.className = 'value'
 
     pName.textContent = this.name
     pValue.textContent = this.value

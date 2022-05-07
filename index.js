@@ -15,7 +15,7 @@ function addTimeStamp(time){
 
     let timeHeader = document.createElement('h1')
     timeHeader.id = 'time-header'
-    timeHeader.textContent = `This data was pulled from api.coingecko.com on ${time}`
+    timeHeader.textContent = `${time}`
 
 
 
@@ -47,7 +47,7 @@ function makeCard(id,baserate){
     div.id = `${id}-container-div`
     div.className = 'card'
     pName.className = 'name'
-    pValue.classValue = 'value'
+    pValue.className = 'value'
 
     pName.textContent = this.name
     pValue.textContent = this.value / baserate
