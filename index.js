@@ -2,13 +2,15 @@
 let jsonOBJ = {}
 let globalBaserate = 1
 let timeStamp
-document.addEventListener('DOMContentLoaded',
 
-()=>{fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
+
+document.addEventListener('DOMContentLoaded', pullContent
+)
+
+function pullContent() {fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
         buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp)
 
 })}
-)
 
 function addTimeStamp(time){
     let timeHeader = document.createElement('h1')
