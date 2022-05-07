@@ -1,14 +1,32 @@
 
+let jsonOBJ = {}
 document.addEventListener('DOMContentLoaded',
 
 ()=>{fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
-        for (let i of Object.keys(data['rates'])){
-                makeCard.call(data['rates'][i],i)}
+        buildPage(data); jsonOBJ = data;
 })}
 )
 
 
-function makeCard(id){
+//separate the for loop in the fetch funcion. make it take the json object.
+//copy the json object so it can be reused
+
+function buildPage(data){
+    //start by clearing the dom
+    while (document.querySelector('body').children.length) {document.querySelector('body').firstChild.remove()}
+    //then build all the cards
+    for (let i of Object.keys(data['rates'])){
+        makeCard.call(data['rates'][i],i,1);
+    }
+    return jsonOBJ
+}
+
+
+
+function makeCard(id,baserate){
+
+
+
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
@@ -49,8 +67,7 @@ function makeCard(id){
 
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>
-        { 
-        if ( 
+        { if ( 
             Boolean(document.querySelector(`#${id}-drop-down`))
             ){
                 document.querySelector(`#${id}-drop-down`).remove()
@@ -59,7 +76,20 @@ function makeCard(id){
         event.target.appendChild(divDropDown);
         }
     )
+
+    
+    baseRateButton.addEventListener('click', ()=>console.log(this)
+    )
 }
+
+// ()=> {while (document.querySelector('body').children.length) {document.querySelector('body').firstChild.remove()}}
+
+//1. put the fetch request in its own function that makes a global copy of the json file, and makes a global copy of a timestamp.
+//2. then you can call makecard with that global json copy as the context and use Object.keys(this.rates), you won't have to pass anything into makeCard at all.
+//then make makeCard recursive delete all the dom divs if they're there so it can be used to refresh the list when you sort or change the base rate.
+
+//actually, all you have to do is pass the whole json object as context in your first fetch>makeCard call...tehn refactor makeCard using all that data...this.rate>keys etc. 
+//then make makeCards revursive del elems if there, and add makeCard to the button with baserate variable.
 
 
 //provide a function to sort by total value, lowest and another sort by highest
