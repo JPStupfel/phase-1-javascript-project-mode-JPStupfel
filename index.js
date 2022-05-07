@@ -4,8 +4,7 @@ let globalBaserate = 1
 let timeStamp
 
 
-document.addEventListener('DOMContentLoaded', pullContent
-)
+document.addEventListener('DOMContentLoaded',pullContent)
 
 function pullContent() {fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
         buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp)
@@ -13,9 +12,13 @@ function pullContent() {fetch('https://api.coingecko.com/api/v3/exchange_rates')
 })}
 
 function addTimeStamp(time){
+
     let timeHeader = document.createElement('h1')
     timeHeader.id = 'time-header'
-    timeHeader.textContent = `This request pulled from api.coingecko.com on ${time}`
+    timeHeader.textContent = `This data was pulled from api.coingecko.com on ${time}`
+
+
+
     document.querySelector('body').prepend(timeHeader)
 
 }
@@ -73,7 +76,7 @@ function makeCard(id,baserate){
 
     divDropDown.appendChild(ptype)
     divDropDown.appendChild(pSymbol)
-    div.parentElement.append(baseRateButton)
+    div.append(baseRateButton)
 
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>

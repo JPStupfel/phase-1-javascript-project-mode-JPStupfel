@@ -13,5 +13,10 @@ border-color:black;
   }
   .base-rate-button {
     color: black;
-    margin: 10px;
+    max-width: 200px;
+    float: right;
+    background-color: aqua;
+    min-height: 40px;
+        
+
   }
