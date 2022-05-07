@@ -1,39 +1,19 @@
 
-const test = document.createElement('div')
-//not working right now because at your event listener your drop down has a key = to the unit of each element...which sometimes contain special characters...solutions? stringify? or copy data in the fetch command and mine the keys of each.
 
-// fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
-//     { 
-//         makeCard.call(i);
-//     }
-// })
-
-
-
-fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { 
-    for (let i of Object.keys(data['rates'])){ 
-        makeCard.call(data.rates[i],i);
-        //console.log(i)
+fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.keys(data['rates']))
+    { 
+        makeCard.call(data['rates'][i],i);
     }
-    // let keys = Object.keys(data['rates'])
-    // console.log(data.rates[keys[0]])
 })
 
-//create a card builder
-//input will be (name,value)
-/*out = 
-<div id=`${name}`>
-    <p classname='name'>name</p>
-    <p classname='value'></p>
-</div>
-*/
-//lets change this so instead of taking args it does a .this
+
+
 function makeCard(id){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
 
-    div.id = `${this.name}`
+    div.id = `${id}-container-div`
     div.className = 'card'
     pName.className = 'name'
     pValue.classValue = 'value'
@@ -63,31 +43,14 @@ function makeCard(id){
 
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>
-    { 
-       console.log(this)
-        console.log(document.querySelector(`#${this.name}-drop-down`))
-       if ( 
-           Boolean(document.querySelector(`#${id}-drop-down`))
-           ){
-            document.querySelector(`#${id}-drop-down`).remove()
-       
-        console.log(event.target)
-       }
-       else  
-       event.target.appendChild(divDropDown);
-       
-    }
-    
+        { 
+        if ( 
+            Boolean(document.querySelector(`#${id}-drop-down`))
+            ){
+                document.querySelector(`#${id}-drop-down`).remove()
+        }
+        else  
+        event.target.appendChild(divDropDown);
+        }
     )
-    
-
 }
-// div.addEventListener('click', (event)=>
-// { 
-//    if ( event.target.children.length <=2 ){
-//     event.target.appendChild(divDropDown);
-//     console.log(event.target)
-//    }
-//    else event.target.querySelector('.drop-down').remove()
-// }
-// )
