@@ -30,6 +30,7 @@ function makeCard(id){
     const divDropDown = document.createElement('div')
     const ptype = document.createElement('p')
     const pSymbol = document.createElement('p')
+    const baseRateButton = document.createElement('button')
 
     divDropDown.className = 'drop-down'
     
@@ -38,8 +39,13 @@ function makeCard(id){
 
     ptype.textContent = `Type: ${this.type}`
     pSymbol.textContent = `Unit: ${this.unit}`
+    baseRateButton.textContent = `Use ${this.name} as base rate`
+    baseRateButton.className = 'base-rate-button'
+
+
     divDropDown.appendChild(ptype)
     divDropDown.appendChild(pSymbol)
+    div.parentElement.append(baseRateButton)
 
     //add event listener to div 'click' to append/remove  p
     div.addEventListener('click', (event)=>
@@ -62,3 +68,5 @@ function makeCard(id){
     //this could be done by adding a global variable for base rate, then on pValue in makeCard add an event listener that listens for global variable base rate to change...and when it does it changes it's function scope variable
 
     //or...I could add a second arg to makeCard that is the exchange rate, and when you click the base rate button of a certain card, it 1. dels all the active cards, 2. runs make card again with the new base rate.
+
+//display time of fetch, using event listener time get or whatever, at top of screen...with a button to update...but that keeps the current base rate :-)

@@ -11,4 +11,7 @@ border-color:black;
     display: inline-flex;
     margin: 10px;
   }
- 
+  .base-rate-button {
+    color: black;
+    margin: 10px;
+  }
