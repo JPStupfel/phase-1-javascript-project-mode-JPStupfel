@@ -1,5 +1,6 @@
 
 let jsonOBJ = {}
+let globalBaserate = 1
 document.addEventListener('DOMContentLoaded',
 
 ()=>{fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
@@ -16,7 +17,7 @@ function buildPage(data){
     while (document.querySelector('body').children.length) {document.querySelector('body').firstChild.remove()}
     //then build all the cards
     for (let i of Object.keys(data['rates'])){
-        makeCard.call(data['rates'][i],i,1);
+        makeCard.call(data['rates'][i],i,globalBaserate);
     }
     return jsonOBJ
 }
@@ -37,7 +38,7 @@ function makeCard(id,baserate){
     pValue.classValue = 'value'
 
     pName.textContent = this.name
-    pValue.textContent = this.value
+    pValue.textContent = this.value / baserate
 
     div.appendChild(pName)
     div.appendChild(pValue)
@@ -78,7 +79,7 @@ function makeCard(id,baserate){
     )
 
     
-    baseRateButton.addEventListener('click', ()=>console.log(this)
+    baseRateButton.addEventListener('click', ()=> {globalBaserate = this.value; console.log(globalBaserate) ; buildPage(jsonOBJ)}
     )
 }
 
