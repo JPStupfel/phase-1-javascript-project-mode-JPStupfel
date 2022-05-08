@@ -23,7 +23,7 @@ function addTimeStamp(time){
 //returns the baserate button
 function makeBaserateButton(id){
     const baseRateButton = document.createElement('button')
-    baseRateButton.textContent = `Use ${this.name} as base rate`
+    baseRateButton.textContent = `Use ${this.unit} as base rate`
     baseRateButton.className = 'base-rate-button'
      //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
      baseRateButton.addEventListener('click', ()=> {globalBaserateID = this.unit; globalBaserate = this.value; buildPage(jsonOBJ)})

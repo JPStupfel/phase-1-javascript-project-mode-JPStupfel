@@ -10,7 +10,7 @@ border-color:black;
     color: black;
     display: inline-flex;
     margin: 10px;
-    font-size: 120%;
+    font-size: 90%;
     font-weight: 400;
 
   }
@@ -21,11 +21,12 @@ border-color:black;
   
   .base-rate-button {
     color: black;
-    max-width: 190px;
-    min-width: 190px;
+    max-width: 150px;
+    min-width: 150px;
     float: right;
     background-color: aqua;
     min-height: 40px;
+    font-size: 80%;
       }
 #time-header{
    
