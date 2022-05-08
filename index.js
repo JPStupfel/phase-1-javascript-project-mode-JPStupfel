@@ -128,3 +128,54 @@ function sortJsonAlpha(){
     buildPage(jsonOBJ)
 }
 
+function sortJsonValue(){
+    let sortArray = []
+    //newOBJ will replace jsonOBJ['rates] once we build it sorted
+    let newOBJ = {}
+
+    //add all the sorting values to sortArray
+    for (let i in jsonOBJ.rates) {
+        sortArray.push(jsonOBJ.rates[i]['value'])
+    }
+
+    //sort sortArray however you like
+    sortArray = sortArray.sort((a,b) => a-b)
+    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
+    for (let i in sortArray){
+        for (j in jsonOBJ.rates )
+        {
+            if (jsonOBJ.rates[j]['value'] === sortArray[i]){
+                newOBJ[j] = jsonOBJ.rates[j]
+            }
+        }
+    } 
+    //replace with newObj
+    jsonOBJ['rates']=newOBJ
+    buildPage(jsonOBJ)
+}
+
+function sortJsonValueLow(){
+    let sortArray = []
+    //newOBJ will replace jsonOBJ['rates] once we build it sorted
+    let newOBJ = {}
+
+    //add all the sorting values to sortArray
+    for (let i in jsonOBJ.rates) {
+        sortArray.push(jsonOBJ.rates[i]['value'])
+    }
+
+    //sort sortArray however you like
+    sortArray = sortArray.sort((a,b) => a-b).reverse()
+    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
+    for (let i in sortArray){
+        for (j in jsonOBJ.rates )
+        {
+            if (jsonOBJ.rates[j]['value'] === sortArray[i]){
+                newOBJ[j] = jsonOBJ.rates[j]
+            }
+        }
+    } 
+    //replace with newObj
+    jsonOBJ['rates']=newOBJ
+    buildPage(jsonOBJ)
+}
