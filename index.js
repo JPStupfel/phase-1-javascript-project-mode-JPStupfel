@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded',pullContent)
 function pullContent() {
     fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
         buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp)})
+         //add sortby event listener
+         document.querySelector('#sort-select').addEventListener('change',handleSort)
+
 }
 
 function addTimeStamp(time){
@@ -178,4 +181,11 @@ function sortJsonValueLow(){
     //replace with newObj
     jsonOBJ['rates']=newOBJ
     buildPage(jsonOBJ)
+}
+
+
+function handleSort(){
+    console.log('hello')
+    console.log(document.querySelector('#sort-select').value
+    )
 }

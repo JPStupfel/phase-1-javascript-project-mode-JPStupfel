@@ -6,8 +6,11 @@ let timeStamp
 
 document.addEventListener('DOMContentLoaded',pullContent)
 
-function pullContent() {fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
-        buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp)
+function pullContent() {
+    
+    fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
+        buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp);
+       
 
 })}
 
@@ -107,6 +110,9 @@ function makeCard(id){
        
 }
 
+function handleSort(){
+    console.log('sort-away')
+}
 
 //refactor and remove baserate as arg as it's always passed globalBaseRate
 
