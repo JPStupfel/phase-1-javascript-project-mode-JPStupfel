@@ -1,10 +1,12 @@
 
 let jsonOBJ = {}
-let globalBaserate = 1
 let timeStamp
-
+let globalBaserate = 1
+let globalBaserateID = 'btc'
 
 document.addEventListener('DOMContentLoaded',pullContent)
+
+
 
 function pullContent() {
     fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
@@ -18,14 +20,13 @@ function addTimeStamp(time){
     document.querySelector('body').prepend(timeHeader)
 }
 
-
 //returns the baserate button
-function makeBaserateButton(){
+function makeBaserateButton(id){
     const baseRateButton = document.createElement('button')
     baseRateButton.textContent = `Use ${this.name} as base rate`
     baseRateButton.className = 'base-rate-button'
      //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
-     baseRateButton.addEventListener('click', ()=> {globalBaserate = this.value; buildPage(jsonOBJ)})
+     baseRateButton.addEventListener('click', ()=> {globalBaserateID = id; globalBaserate = this.value; buildPage(jsonOBJ)})
     return baseRateButton
 }
 
@@ -41,7 +42,7 @@ function makeDiv(id){
         pValue.className = 'value'
 
         pName.textContent = this.name
-        pValue.textContent = this.value / globalBaserate
+        pValue.textContent = `${this.value / globalBaserate}(${globalBaserateID})`
 
     div.appendChild(pName)
     div.appendChild(pValue)
@@ -78,7 +79,7 @@ function makeCard(id){
     const div = makeDiv.call(this,id,globalBaserate)
     document.querySelector('#card-body').appendChild(div)
 
-    const baseRateButton = makeBaserateButton.call(this)
+    const baseRateButton = makeBaserateButton.call(this,id)
     div.append(baseRateButton)
        
 }
@@ -92,9 +93,6 @@ function buildPage(data){
     }
 return jsonOBJ
 }
-
-
-
 
 //function to sort jsonOBJ alphabetically
 //function to sort jsonOBJ by rate low to high
