@@ -97,3 +97,34 @@ return jsonOBJ
 //function to sort jsonOBJ alphabetically
 //function to sort jsonOBJ by rate low to high
 //function to sort jsonOBJ by rate high to low
+
+//I want to rearrange the object jsonOBJ.rates by jsonOBJ.rates[i].name alphabetically
+
+
+function sortJsonAlpha(){
+    let sortArray = []
+    //newOBJ will replace jsonOBJ['rates] once we build it sorted
+    let newOBJ = {}
+
+    //add all the sorting values to sortArray
+    for (let i in jsonOBJ.rates) {
+        sortArray.push(jsonOBJ.rates[i]['name'])
+    }
+
+    //sort sortArray however you like
+    sortArray = sortArray.sort()
+
+    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
+    for (let i in sortArray){
+        for (j in jsonOBJ.rates )
+        {
+            if (jsonOBJ.rates[j]['name'] === sortArray[i]){
+                newOBJ[j] = jsonOBJ.rates[j]
+            }
+        }
+    } 
+    //replace with newObj
+    jsonOBJ['rates']=newOBJ
+    buildPage(jsonOBJ)
+}
+
