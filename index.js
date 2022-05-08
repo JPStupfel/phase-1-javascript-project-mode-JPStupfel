@@ -45,7 +45,7 @@ function makeBaserateButton(){
     return baseRateButton
 }
 
-function makeDiv(id,baserate){
+function makeDiv(id){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
@@ -56,7 +56,7 @@ function makeDiv(id,baserate){
     pValue.className = 'value'
 
     pName.textContent = this.name
-    pValue.textContent = this.value / baserate
+    pValue.textContent = this.value / globalBaserate
 
     div.appendChild(pName)
     div.appendChild(pValue)
@@ -97,9 +97,9 @@ function makeDropDown(id){
     return divDropDown
 }
 
-function makeCard(id,baserate){
+function makeCard(id){
 
-    const div = makeDiv.call(this,id,baserate)
+    const div = makeDiv.call(this,id,globalBaserate)
     document.querySelector('#card-body').appendChild(div)
 
     const baseRateButton = makeBaserateButton.call(this)
@@ -108,7 +108,9 @@ function makeCard(id,baserate){
 }
 
 
-//refactor makecard for each item
+//refactor and remove baserate as arg as it's always passed globalBaseRate
+
+//refactor, remove id if can...its in the this
 
 //function to sort jsonOBJ alphabetically
 //function to sort jsonOBJ by rate low to high
