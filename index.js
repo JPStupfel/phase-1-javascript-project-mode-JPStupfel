@@ -185,7 +185,15 @@ function sortJsonValueLow(){
 
 
 function handleSort(){
-    console.log('hello')
-    console.log(document.querySelector('#sort-select').value
-    )
+
+    switch (document.querySelector('#sort-select').value){
+        case 'alpha': sortJsonAlpha(); break;
+        case 'value-high': sortJsonValue();break;
+        case 'value-low': sortJsonValueLow();break;
+        
+    }
+    //remove the default option if it's still there
+   if (Boolean( document.querySelector('#default-sort'))) document.querySelector('#default-sort').remove()
+
+    //console.log(document.querySelector('#sort-select').value)
 }
