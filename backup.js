@@ -1,51 +1,82 @@
 
-const test = document.createElement('div')
-
-// fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { for (let i of Object.values(data['rates']))
-//     { 
-//         makeCard.call(i);
-//     }
-// })
+let jsonOBJ = {}
+let globalBaserate = 1
+let timeStamp
 
 
+document.addEventListener('DOMContentLoaded',pullContent)
 
-fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> { 
-    for (let i of Object.keys(data['rates'])){ 
-        makeCard.call(data.rates[i],i);
-        //console.log(i)
+function pullContent() {fetch('https://api.coingecko.com/api/v3/exchange_rates').then(res=>res.json()).then(data=> {
+        buildPage(data); jsonOBJ = data; timeStamp = new Date(); addTimeStamp(timeStamp)
+
+})}
+
+function addTimeStamp(time){
+
+    let timeHeader = document.createElement('h1')
+    timeHeader.id = 'time-header'
+    timeHeader.textContent = `${time}`
+
+
+
+    document.querySelector('body').prepend(timeHeader)
+
+}
+
+
+function buildPage(data){
+    //start by clearing the dom
+    while (document.querySelector('#card-body').children.length) {document.querySelector('#card-body').firstChild.remove()}
+    //then build all the cards
+    for (let i of Object.keys(data['rates'])){
+        makeCard.call(data['rates'][i],i,globalBaserate);
     }
-    // let keys = Object.keys(data['rates'])
-    // console.log(data.rates[keys[0]])
-})
+    return jsonOBJ
+}
 
-//create a card builder
-//input will be (name,value)
-/*out = 
-<div id=`${name}`>
-    <p classname='name'>name</p>
-    <p classname='value'></p>
-</div>
-*/
-//lets change this so instead of taking args it does a .this
-function makeCard(id){
+//returns the baserate button
+function makeBaserateButton(){
+    const baseRateButton = document.createElement('button')
+    baseRateButton.textContent = `Use ${this.name} as base rate`
+    baseRateButton.className = 'base-rate-button'
+     //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
+     baseRateButton.addEventListener('click', ()=> {globalBaserate = this.value; buildPage(jsonOBJ)}
+     )
+    return baseRateButton
+}
+
+function makeDiv(id){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
 
-    div.id = `${this.name}`
+    div.id = `${id}-container-div`
     div.className = 'card'
     pName.className = 'name'
     pValue.className = 'value'
 
     pName.textContent = this.name
-    pValue.textContent = this.value
+    pValue.textContent = this.value / globalBaserate
 
     div.appendChild(pName)
     div.appendChild(pValue)
 
-    document.querySelector('body').appendChild(div)
+    div.addEventListener('click', (event)=>
+    { if ( 
+        Boolean(document.querySelector(`#${id}-drop-down`))
+        ){
+            document.querySelector(`#${id}-drop-down`).remove()
+    }
+    else  
+    event.target.appendChild(makeDropDown.call(this,id));
+    }
+)
+    debugger
+    return div
 
-    //make the drop down p
+}
+
+function makeDropDown(id){
     const divDropDown = document.createElement('div')
     const ptype = document.createElement('p')
     const pSymbol = document.createElement('p')
@@ -57,36 +88,30 @@ function makeCard(id){
 
     ptype.textContent = `Type: ${this.type}`
     pSymbol.textContent = `Unit: ${this.unit}`
+  
+
+
     divDropDown.appendChild(ptype)
     divDropDown.appendChild(pSymbol)
 
-    //add event listener to div 'click' to append/remove  p
-    div.addEventListener('click', (event)=>
-    { 
-       console.log(this)
-        console.log(document.querySelector(`#${this.name}-drop-down`))
-       if ( 
-           Boolean(document.querySelector(`#${id}-drop-down`))
-           ){
-            document.querySelector(`#${id}-drop-down`).remove()
-       
-        console.log(event.target)
-       }
-       else  
-       event.target.appendChild(divDropDown);
-       
-    }
-    
-    )
-    
-
+    return divDropDown
 }
-// div.addEventListener('click', (event)=>
-// { 
-//    if ( event.target.children.length <=2 ){
-//     event.target.appendChild(divDropDown);
-//     console.log(event.target)
-//    }
-//    else event.target.querySelector('.drop-down').remove()
-// }
-// )
+
+function makeCard(id){
+
+    const div = makeDiv.call(this,id,globalBaserate)
+    document.querySelector('#card-body').appendChild(div)
+
+    const baseRateButton = makeBaserateButton.call(this)
+    div.append(baseRateButton)
+       
+}
+
+
+//refactor and remove baserate as arg as it's always passed globalBaseRate
+
+//refactor, remove id if can...its in the this
+
+//function to sort jsonOBJ alphabetically
+//function to sort jsonOBJ by rate low to high
+//function to sort jsonOBJ by rate high to low
