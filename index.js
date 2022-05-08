@@ -34,12 +34,18 @@ function buildPage(data){
     return jsonOBJ
 }
 
+//returns the baserate button
+function makeBaserateButton(){
+    const baseRateButton = document.createElement('button')
+    baseRateButton.textContent = `Use ${this.name} as base rate`
+    baseRateButton.className = 'base-rate-button'
+     //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
+     baseRateButton.addEventListener('click', ()=> {globalBaserate = this.value; buildPage(jsonOBJ)}
+     )
+    return baseRateButton
+}
 
-
-function makeCard(id,baserate){
-
-
-
+function makeDiv(id,baserate){
     const div = document.createElement('div')
     const pName = document.createElement('p')
     const pValue = document.createElement('p')
@@ -55,13 +61,25 @@ function makeCard(id,baserate){
     div.appendChild(pName)
     div.appendChild(pValue)
 
-    document.querySelector('#card-body').appendChild(div)
+    div.addEventListener('click', (event)=>
+    { if ( 
+        Boolean(document.querySelector(`#${id}-drop-down`))
+        ){
+            document.querySelector(`#${id}-drop-down`).remove()
+    }
+    else  
+    event.target.appendChild(makeDropDown.call(this,id));
+    }
+)
 
-    //make the drop down p
+    return div
+
+}
+
+function makeDropDown(id){
     const divDropDown = document.createElement('div')
     const ptype = document.createElement('p')
     const pSymbol = document.createElement('p')
-    const baseRateButton = document.createElement('button')
 
     divDropDown.className = 'drop-down'
     
@@ -70,34 +88,28 @@ function makeCard(id,baserate){
 
     ptype.textContent = `Type: ${this.type}`
     pSymbol.textContent = `Unit: ${this.unit}`
-    baseRateButton.textContent = `Use ${this.name} as base rate`
-    baseRateButton.className = 'base-rate-button'
+  
 
 
     divDropDown.appendChild(ptype)
     divDropDown.appendChild(pSymbol)
+
+    return divDropDown
+}
+
+function makeCard(id,baserate){
+
+    const div = makeDiv.call(this,id,baserate)
+    document.querySelector('#card-body').appendChild(div)
+
+    const baseRateButton = makeBaserateButton.call(this)
     div.append(baseRateButton)
-
-    //add event listener to div 'click' to append/remove  p
-    div.addEventListener('click', (event)=>
-        { if ( 
-            Boolean(document.querySelector(`#${id}-drop-down`))
-            ){
-                document.querySelector(`#${id}-drop-down`).remove()
-        }
-        else  
-        event.target.appendChild(divDropDown);
-        }
-    )
-
-    //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
-    baseRateButton.addEventListener('click', ()=> {globalBaserate = this.value; buildPage(jsonOBJ)}
-    )
+       
 }
 
 
-//display time of fetch, using event listener time get or whatever, at top of screen...with a button to update...but that keeps the current base rate :-)
+//refactor makecard for each item
 
-//I really want the baserate button to be on the right hand side
-
-//if I could refactor makecard somehow..you refactors can be called using dot call and pass this as context
+//function to sort jsonOBJ alphabetically
+//function to sort jsonOBJ by rate low to high
+//function to sort jsonOBJ by rate high to low
