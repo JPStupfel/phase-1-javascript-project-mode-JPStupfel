@@ -1,5 +1,7 @@
 .card {
-background-color: beige;
+flex-wrap: wrap;
+flex:auto;
+
   }
   
   p {
@@ -7,7 +9,6 @@ background-color: beige;
     margin: 10px;
     font-size: 90%;
     font-weight: 400;
-    
 
   }
 
@@ -36,8 +37,7 @@ border-color:black;
     color: white;
 }
 .cross{
-    
-border: 1px solid;
+    border: 1px solid;
 display: flex;
 background-color: beige;
 
