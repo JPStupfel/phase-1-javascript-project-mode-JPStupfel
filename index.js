@@ -32,7 +32,7 @@ function makeBaserateButton(id){
      //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
 
      baseRateButton.addEventListener('click', ()=> {
-         globalBaserateID = this.unit; globalBaserate = this.value; buildPage(jsonOBJ)
+         globalBaserateID = this.unit; globalBaserate = this.value; buildPage(jsonOBJ);
         })
         
 
@@ -54,12 +54,12 @@ function makeDiv(id){
         pValue.className = 'value'
 
         pName.textContent = this.name
-        pValue.textContent = `${this.value / globalBaserate}(${globalBaserateID})`
+        pValue.textContent = `${this.value / globalBaserate}(${id})`
 
     div.appendChild(pName)
     div.appendChild(pValue)
 
-    div.addEventListener('click', (event)=>{ 
+    div.addEventListener('click', ()=>{ 
         if ( Boolean(document.querySelector(`#${id}-drop-down`))){
             document.querySelector(`#${id}-drop-down`).remove()}
          else   document.querySelector(`#${id}-container-div`).appendChild(makeDropDown.call(this,id));
@@ -89,10 +89,13 @@ function makeDropDown(id){
 function makeCard(id){
 
     const div = makeDiv.call(this,id,globalBaserate)
+
     document.querySelector('#card-body').appendChild(div)
 
     const baseRateButton = makeBaserateButton.call(this,id)
+
     div.append(baseRateButton)
+    
        
 }
 
@@ -210,4 +213,3 @@ function handleSort(){
 
 
 //fix so clicking baseRate doesn't drop down
-// you must use map, for each or filter
