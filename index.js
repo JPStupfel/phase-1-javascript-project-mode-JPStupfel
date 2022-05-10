@@ -53,7 +53,7 @@ function makeDiv(id){
     div.addEventListener('click', (event)=>{ 
         if ( Boolean(document.querySelector(`#${id}-drop-down`))){
             document.querySelector(`#${id}-drop-down`).remove()}
-         else  event.target.appendChild(makeDropDown.call(this,id));
+         else   document.querySelector(`#${id}-container-div`).appendChild(makeDropDown.call(this,id));
         }
     )
     return div
@@ -197,3 +197,9 @@ function handleSort(){
 
     //console.log(document.querySelector('#sort-select').value)
 }
+
+//bug to fix. when click pValue, drop down is weird.
+
+//make the default option one of the sorting options by salvaging the original jsonOBJ
+
+//see about a beige on light beige style?
