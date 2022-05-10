@@ -216,4 +216,3 @@ function handleSort(){
 
 
 
-//fix so clicking baseRate doesn't drop down
