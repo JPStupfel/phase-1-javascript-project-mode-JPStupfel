@@ -1,6 +1,7 @@
 
 let jsonOBJ = {}
 let timeStamp
+//default baseRate will be BTC and 1
 let globalBaserate = 1
 let globalBaserateID = 'BTC'
 
@@ -29,8 +30,16 @@ function makeBaserateButton(id){
     baseRateButton.textContent = `Use ${this.unit} as base rate`
     baseRateButton.className = 'base-rate-button'
      //baserate button resests the global baserate value and rebuilds the page using the jsonOBJ copy
-     baseRateButton.addEventListener('click', ()=> {globalBaserateID = this.unit; globalBaserate = this.value; buildPage(jsonOBJ)})
+
+     baseRateButton.addEventListener('click', ()=> {
+         globalBaserateID = this.unit; globalBaserate = this.value; buildPage(jsonOBJ)
+        })
+        
+
+
     return baseRateButton
+
+
 }
 
 function makeDiv(id){
@@ -89,19 +98,17 @@ function makeCard(id){
 
 function buildPage(data){
     //start by clearing the card-body
-    while (document.querySelector('#card-body').children.length) {document.querySelector('#card-body').firstChild.remove()}
-    //then build all the cards
+    while (document.querySelector('#card-body').children.length) {
+        document.querySelector('#card-body').firstChild.remove()
+    }
+   // then build all the cards
     for (let i of Object.keys(data['rates'])){
         makeCard.call(data['rates'][i],i);
     }
 return jsonOBJ
 }
 
-//function to sort jsonOBJ alphabetically
-//function to sort jsonOBJ by rate low to high
-//function to sort jsonOBJ by rate high to low
 
-//I want to rearrange the object jsonOBJ.rates by jsonOBJ.rates[i].name alphabetically
 
 
 function sortJsonAlpha(){
@@ -110,9 +117,11 @@ function sortJsonAlpha(){
     let newOBJ = {}
 
     //add all the sorting values to sortArray
-    for (let i in jsonOBJ.rates) {
-        sortArray.push(jsonOBJ.rates[i]['name'])
-    }
+   
+    Object.keys(jsonOBJ.rates).map(
+        e=>sortArray.push(jsonOBJ.rates[e]['name'])
+        )
+
 
     //sort sortArray however you like
     sortArray = sortArray.sort()
@@ -137,9 +146,9 @@ function sortJsonValue(){
     let newOBJ = {}
 
     //add all the sorting values to sortArray
-    for (let i in jsonOBJ.rates) {
-        sortArray.push(jsonOBJ.rates[i]['value'])
-    }
+    Object.keys(jsonOBJ.rates).map(
+        e=>sortArray.push(jsonOBJ.rates[e]['value'])
+        )
 
     //sort sortArray however you like
     sortArray = sortArray.sort((a,b) => a-b)
@@ -198,8 +207,7 @@ function handleSort(){
     //console.log(document.querySelector('#sort-select').value)
 }
 
-//bug to fix. when click pValue, drop down is weird.
 
-//make the default option one of the sorting options by salvaging the original jsonOBJ
 
-//see about a beige on light beige style?
+//fix so clicking baseRate doesn't drop down
+// you must use map, for each or filter
