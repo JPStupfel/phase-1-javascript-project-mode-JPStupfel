@@ -9,11 +9,12 @@ flex:auto;
     margin: 10px;
     font-size: 90%;
     font-weight: 400;
+    flex: inherit;
 
   }
 
   .value{
-      max-width: 80px;
+      max-width: 800px;
   }
   
   .base-rate-button {
