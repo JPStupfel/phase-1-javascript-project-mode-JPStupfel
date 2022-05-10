@@ -24,7 +24,6 @@ function addTimeStamp(time){
     document.querySelector('body').prepend(timeHeader)
 }
 
-//returns the baserate button
 function makeBaserateButton(id){
     const baseRateButton = document.createElement('button')
     baseRateButton.textContent = `Use ${this.unit} as base rate`
@@ -187,10 +186,12 @@ function sortJsonValueLow(){
     sortArray = sortArray.sort((a,b) => a-b).reverse()
     //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
     for (let i in sortArray){
-        for (j in jsonOBJ.rates )
+        for (let j in jsonOBJ.rates )
         {
             if (jsonOBJ.rates[j]['value'] === sortArray[i]){
-                newOBJ[j] = jsonOBJ.rates[j]
+                newOBJ[j] = jsonOBJ.rates[j]; 
+                //delete here prevents double entries.
+                delete jsonOBJ.rates[j];
             }
         }
     } 
@@ -216,3 +217,21 @@ function handleSort(){
 
 
 
+function sortByValue(obj, value, sortFunction){
+    let sortArray = []
+    let newOBJ = {}
+
+    Object.keys(obj).map(key=>{
+        sortArray.push(obj[key][value])}
+        )
+
+    sortFunction(sortArray)
+
+    for (let i in sortArray){
+        for (j in obj ){
+            if (obj[j][value] === sortArray[i]){
+                newOBJ[j] = obj[j]}
+            }
+        } 
+    return newOBJ
+}
