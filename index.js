@@ -53,7 +53,7 @@ function makeDiv(id){
         pValue.className = 'value'
 
         pName.textContent = this.name
-        pValue.textContent = `${this.value / globalBaserate}(${globalBaserateID})`
+        pValue.textContent = `${ 1/(this.value / globalBaserate) }(${globalBaserateID})`
 
     div.appendChild(pName)
     div.appendChild(pValue)
@@ -115,90 +115,19 @@ return jsonOBJ
 }
 
 
-
-
 function sortJsonAlpha(){
-    let sortArray = []
-    //newOBJ will replace jsonOBJ['rates] once we build it sorted
-    let newOBJ = {}
-
-    //add all the sorting values to sortArray
-   
-    Object.keys(jsonOBJ.rates).map(
-        e=>sortArray.push(jsonOBJ.rates[e]['name'])
-        )
-
-
-    //sort sortArray however you like
-    sortArray = sortArray.sort()
-
-    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
-    for (let i in sortArray){
-        for (j in jsonOBJ.rates )
-        {
-            if (jsonOBJ.rates[j]['name'] === sortArray[i]){
-                newOBJ[j] = jsonOBJ.rates[j]
-            }
-        }
-    } 
-    //replace with newObj
-    jsonOBJ['rates']=newOBJ
+    jsonOBJ.rates = sortByValue(jsonOBJ.rates, 'name', ((e)=>{e.sort()}))
+    buildPage(jsonOBJ)
+}
+function sortJsonValue() {
+    jsonOBJ.rates = sortByValue(jsonOBJ.rates, 'value', ((e)=>{e.sort((a,b) => a-b)}))
+    buildPage(jsonOBJ)
+}
+function sortJsonValueLow() {
+    jsonOBJ.rates = sortByValue(jsonOBJ.rates, 'value', ((e)=>{(e.sort((a,b) => a-b).reverse())}))
     buildPage(jsonOBJ)
 }
 
-function sortJsonValue(){
-    let sortArray = []
-    //newOBJ will replace jsonOBJ['rates] once we build it sorted
-    let newOBJ = {}
-
-    //add all the sorting values to sortArray
-    Object.keys(jsonOBJ.rates).map(
-        e=>sortArray.push(jsonOBJ.rates[e]['value'])
-        )
-
-    //sort sortArray however you like
-    sortArray = sortArray.sort((a,b) => a-b)
-    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
-    for (let i in sortArray){
-        for (j in jsonOBJ.rates )
-        {
-            if (jsonOBJ.rates[j]['value'] === sortArray[i]){
-                newOBJ[j] = jsonOBJ.rates[j]
-            }
-        }
-    } 
-    //replace with newObj
-    jsonOBJ['rates']=newOBJ
-    buildPage(jsonOBJ)
-}
-
-function sortJsonValueLow(){
-    let sortArray = []
-    //newOBJ will replace jsonOBJ['rates] once we build it sorted
-    let newOBJ = {}
-
-    //add all the sorting values to sortArray
-    for (let i in jsonOBJ.rates) {
-        sortArray.push(jsonOBJ.rates[i]['value'])
-    }
-
-    //sort sortArray however you like
-    sortArray = sortArray.sort((a,b) => a-b).reverse()
-    //for all sorted values in order, iterate through orig obj by keys, if origOBJ.key.sortingValue === sortArray[iterater] then add origOBJ.key to the newOBJ
-    for (let i in sortArray){
-        for (let j in jsonOBJ.rates )
-        {
-            if (jsonOBJ.rates[j]['value'] === sortArray[i]){
-                newOBJ[j] = jsonOBJ.rates[j]; 
-                //delete here prevents double entries.
-                delete jsonOBJ.rates[j];
-            }
-        }
-    } 
-    //replace with newObj
-    jsonOBJ['rates']=newOBJ
-    buildPage(jsonOBJ)
-}
 
 
 function handleSort(){
@@ -221,12 +150,15 @@ function sortByValue(obj, value, sortFunction){
     let sortArray = []
     let newOBJ = {}
 
+    //add values, in the order they are in now, to sortArray
     Object.keys(obj).map(key=>{
         sortArray.push(obj[key][value])}
         )
 
+    //Perform the sortFunction
     sortFunction(sortArray)
 
+    //Cross-iterate sortArray with original object and populate the new Object
     for (let i in sortArray){
         for (j in obj ){
             if (obj[j][value] === sortArray[i]){
