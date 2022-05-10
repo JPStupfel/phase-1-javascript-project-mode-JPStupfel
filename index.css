@@ -1,17 +1,13 @@
 .card {
-    
-background-color: whitesmoke;
-border-width:20px;
-border-style:solid;
-border-color:black;
+background-color: beige;
   }
   
   p {
-    color: black;
     display: inline-flex;
     margin: 10px;
     font-size: 90%;
     font-weight: 400;
+    
 
   }
 
@@ -20,14 +16,12 @@ border-color:black;
   }
   
   .base-rate-button {
-    color: black;
-    max-width: 150px;
-    min-width: 150px;
-    float: right;
-    background-color: aqua;
-    min-height: 40px;
-    font-size: 80%;
-      }
+    background-color: beige;
+position: absolute;
+right: 20px;
+align-self: center;
+  }
+
 #time-header{
    
    text-align: center;
@@ -37,9 +31,14 @@ border-style:solid;
 border-color:black;
 
 }
-body{
-    background-color: black;
-}
+
 #sort{
     color: white;
+}
+.cross{
+    
+border: 1px solid;
+display: flex;
+background-color: beige;
+
 }

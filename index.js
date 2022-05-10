@@ -54,12 +54,12 @@ function makeDiv(id){
         pValue.className = 'value'
 
         pName.textContent = this.name
-        pValue.textContent = `${this.value / globalBaserate}(${id})`
+        pValue.textContent = `${this.value / globalBaserate}(${globalBaserateID})`
 
     div.appendChild(pName)
     div.appendChild(pValue)
 
-    div.addEventListener('click', ()=>{ 
+    div.addEventListener('click', (event)=>{ 
         if ( Boolean(document.querySelector(`#${id}-drop-down`))){
             document.querySelector(`#${id}-drop-down`).remove()}
          else   document.querySelector(`#${id}-container-div`).appendChild(makeDropDown.call(this,id));
@@ -87,14 +87,18 @@ function makeDropDown(id){
 }
 
 function makeCard(id){
+    const span = document.createElement('table')
+    span.className = "cross"
 
     const div = makeDiv.call(this,id,globalBaserate)
+    span.appendChild(div)
+    document.querySelector('#card-body').appendChild(span)
+    //document.querySelector('#card-body').appendChild(div)
 
-    document.querySelector('#card-body').appendChild(div)
 
     const baseRateButton = makeBaserateButton.call(this,id)
 
-    div.append(baseRateButton)
+    span.appendChild(baseRateButton)
     
        
 }
