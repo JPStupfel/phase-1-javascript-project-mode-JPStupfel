@@ -53,7 +53,14 @@ function makeDiv(id){
         pValue.className = 'value'
 
         pName.textContent = this.name
-        pValue.textContent = `${ 1/(this.value / globalBaserate) }(${globalBaserateID})`
+
+        let n = this.value / globalBaserate
+
+       //this code snippet rounds the value to at least 2 decimal places or to the nearest nonzero decimal place. Math.log10 returns the decimals right of zero
+        let displayValue = parseFloat(n.toExponential(Math.max(1,2+Math.log10(Math.abs(n)))));
+
+
+        pValue.textContent = `${ displayValue }(${this.unit}) = 1(${globalBaserateID})`
 
     div.appendChild(pName)
     div.appendChild(pValue)
